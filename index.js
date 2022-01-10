@@ -9,33 +9,18 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-// 
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
-
-//     console.log('Welcome: (^_^)!')
-//     socket.on('disconnect', () => {
-//       console.log('user disconnected');
-//     });
-
-// // Nhan tin nhan submit tu client
-//     socket.on('chat message', (msg) => {
-//         console.log('message: ' + msg);
-//       });
-// });
-
 // Bat su kien connection
 io.on('connection', (socket) => {
         console.log('A user Connect')
-        io.emit('broadcast', "A user connected")
+        io.emit('broadcast', "Một thằng lol vừa vào :). Welcome")
     // Bat su kien 'chat message'
-    socket.on('chat message', (msg) => {
+    socket.on('chat message', (name, msg) => {
         // GUi su kien Chat message ve client
-        io.emit('chat message', msg);
+        io.emit('chat message', name + ': ' + msg);
     });
     socket.on('disconnect', () => {
         console.log('Disconnect')
-        io.emit('broadcast', "A user disconnected. Good bye :(("); // emit an event to all connected sockets
+        io.emit('broadcast', "Một thằng bị mẹ gank nên thoát :) Good bye :(("); // emit an event to all connected sockets
     })
 });
 
